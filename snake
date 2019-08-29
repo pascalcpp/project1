@@ -1,0 +1,403 @@
+#include<stdio.h>
+#include<time.h>
+#include"head.h"
+#include<string.h>
+#include<windows.h>
+#include<stdlib.h>
+#include"Death.h"
+#define MMax 50
+void Draw_background();            // snake body [] 
+void Produce_food();              // back ground [][]
+void Produce_snakebody();
+void S_move();
+void Change_dir();
+int Grow_body();
+int  Death();
+int west = 4;
+int south = 2;
+int east = 6;
+int north = 8;
+int x_1;
+int y_1;
+int Length = 3;
+struct Snake
+{
+	int x;
+	int y;
+	int Direct;                                           //  west = 4 south = 2 north = 8 east = 6
+};
+Snake Body[MMax];
+Snake L_Body[MMax];
+
+int main()
+
+{
+	int flag_1 = 1;
+	int flag_2 = 1;
+	int flag_3;
+	int flag_4;
+	while (1)
+	{
+		system("cls");
+		if (flag_2 == 1)
+		{
+			Produce_food();
+			flag_2 = 0;
+		}
+		
+		if (flag_1 == 1)
+		{
+			Produce_snakebody();
+			flag_1 = 0;
+		}
+
+		else
+			
+	   
+	    Draw_background();
+		S_move();
+		flag_3 = Grow_body();
+		if (flag_3 ==1)
+		{
+			flag_2 = 1;
+		}
+		if (flag_3 == 0)
+		{
+			flag_2 = 0;
+		}
+		flag_4 = Death();
+	    Change_dir();
+		
+		
+		if (flag_4 == 1)
+		{
+			continue;
+		}
+			
+		
+		if (flag_4 == 0)
+		{
+			break;
+		}
+		Sleep(500);
+			
+
+		
+	}
+	system("cls");
+	
+	for (int m =0;m<128;m++)
+	{
+		printf("%s", Dea[m]);
+	}
+	
+
+	system("pause");
+	return 0;
+}
+
+void Draw_background()
+{
+	int i;
+	for (i = 0; i<32; i++)
+	{
+		printf("%s", Back_ground[i]);
+	}
+
+}
+void Produce_food()
+{
+	int x, y;
+	srand((unsigned int)time(NULL));
+	x = rand() % 78 + 1;  //  0-77 1-78
+	y = rand() % 30 + 1;  // 1-30 
+	x_1 = x;
+	y_1 = y;
+	strncpy(&Back_ground[y][x], "o", 1);
+}
+void Produce_snakebody()
+{
+	int x, y;
+	do
+	{
+		srand((unsigned int)time(NULL));
+		x = rand() % 76 + 1;
+		y = rand() % 30 + 1;
+
+	} while (x == x_1 && y==y_1);
+		
+
+
+	
+	
+	for (int i = 0; i < 3; i++)
+	{
+		Body[i] = { x, y, west };
+		strncpy(&Back_ground[Body[i].y][Body[i].x], "*", 1);
+		x += 1;
+
+	}
+
+
+}
+void S_move()
+{
+	      
+		
+
+	
+	strncpy(&Back_ground[Body[Length - 1].y][Body[Length - 1].x], " ", 1);
+	if (Body[0].Direct==west)
+	{
+		    for (int a = 0; a < Length; a++)
+		    {
+			L_Body[a] = Body[a];
+
+		    }
+		    /*L_Body[0] = Body[0];
+			L_Body[1] = Body[1];
+			L_Body[2] = Body[2];*/
+			Body[0].x -= 1;
+			for (int b = 1; b < Length; b++)
+			{
+				Body[b] = L_Body[b - 1];
+			}
+		/*	Body[1] = L_Body[0];
+			Body[2] = L_Body[1];*/
+			for (int j = 0; j < Length; j++)
+			{
+				
+				strncpy(&Back_ground[Body[j].y][Body[j].x], "*", 1);
+			}
+			return;
+		
+	}
+	if (Body[0].Direct == north)
+	{
+		for (int a = 0; a < Length; a++)
+		{
+			L_Body[a] = Body[a];
+
+		}
+	
+		Body[0].y -= 1;
+		for (int b = 1; b < Length; b++)
+		{
+			Body[b] = L_Body[b - 1];
+		}
+		for (int j = 0; j < Length; j++)
+		{
+			
+			strncpy(&Back_ground[Body[j].y][Body[j].x], "*", 1);
+		}
+
+		return;
+	}
+	if (Body[0].Direct == south)
+	{
+		for (int a = 0; a < Length; a++)
+		{
+			L_Body[a] = Body[a];
+
+		}
+		Body[0].y += 1;
+		for (int b = 1; b < Length; b++)
+		{
+			Body[b] = L_Body[b - 1];
+		}
+		for (int j = 0; j < Length; j++)
+		{
+			
+			strncpy(&Back_ground[Body[j].y][Body[j].x], "*", 1);
+		}
+		return;
+
+	}
+	if (Body[0].Direct == east)
+	{
+		for (int a = 0; a < Length; a++)
+		{
+			L_Body[a] = Body[a];
+
+		}
+		Body[0].x += 1;
+		for (int b = 1; b < Length; b++)
+		{
+			Body[b] = L_Body[b - 1];
+		}
+		for (int j = 0; j < Length; j++)
+		{
+			
+			strncpy(&Back_ground[Body[j].y][Body[j].x], "*", 1);
+		}
+
+		return;
+	}
+	
+}
+void Change_dir()
+{
+
+	 //  west = 4 south = 2 north = 8 east = 6
+	if (GetAsyncKeyState('W'))
+	{
+	
+		Body[0].Direct = north;
+		return;
+
+	}
+	if (GetAsyncKeyState('S'))
+	{
+		
+		Body[0].Direct = south;
+		return;
+
+	}
+	if (GetAsyncKeyState('A'))
+	{
+		
+		Body[0].Direct = west;
+		return;
+	}
+	if (GetAsyncKeyState('D'))
+	{
+		
+		Body[0].Direct = east;
+		return;
+	}
+	
+
+
+
+
+}
+int Grow_body()
+{
+	if (Body[0].x == x_1 && Body[0].y == y_1)
+	{
+		
+		if (Body[Length-1].Direct == west)
+		{
+			Body[Length] = { (Body[Length - 1].x)+1, Body[Length - 1].y, Body[Length - 1].Direct };
+
+		}
+
+		if (Body[Length - 1].Direct == east)
+		{
+			Body[Length] = { (Body[Length - 1].x) - 1, Body[Length - 1].y, Body[Length - 1].Direct };
+
+		}
+		if (Body[Length - 1].Direct == north)
+		{
+			Body[Length] = { Body[Length - 1].x, (Body[Length - 1].y)+1, Body[Length - 1].Direct };
+
+		}
+		if (Body[Length - 1].Direct == south)
+		{
+			Body[Length] = { Body[Length - 1].x, (Body[Length - 1].y)-1, Body[Length - 1].Direct };
+
+		}
+		Length += 1;
+		return  1;
+
+	}
+
+
+
+	return  0;
+
+
+
+}
+int Death()
+{
+	
+	if (Body[0].y == 0 || Body[0].y == 31 || Body[0].x == 0 || Body[0].x == 79)
+	{
+		return 0;
+	}
+	for (int i = 1; i < Length; i++)
+	{
+		if (Body[0].x == Body[i].x && Body[0].y == Body[i].y)
+		{
+			return 0;
+		}
+		
+	}
+
+	return 1;
+
+
+
+
+}
+// char   Dea[128][128]=
+// {                                                             //    76 77 78 79    1-76
+//	{ "--------------------------------------------------------------------------------\n" },  //x=80 y=32 now y=0
+//	{ "|                                                                              |\n" },  // 1- 30
+//	{ "|          ¦¦¦¦¦          ¦¦¦¦¦        ¦¦¦¦¦                    |\n" },
+//	{ "|          ¦       ¦             ¦            ¦                            |\n" },
+//	{ "|          ¦        ¦            ¦            ¦                            |\n" },
+//	{ "|          ¦         ¦           ¦            ¦¦¦¦¦                    |\n" },
+//	{ "|          ¦         ¦           ¦            ¦                            |\n" },
+//	{ "|          ¦        ¦        ¦¦¦¦¦        ¦¦¦¦¦                    |\n" }, 
+//	{ "|          ¦       ¦                                                         |\n" },
+//	{ "|          ¦  ¦  ¦                                                          |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "--------------------------------------------------------------------------------\n" }, // now y= 31 
+//};
+//char Back_ground[128][128] =
+//{ //0 1                                                                       76 77 78 79    1-76
+//	{ "--------------------------------------------------------------------------------\n" },  //x=80 y=32 now y=0
+//	{ "|                                                                              |\n" },  // 1- 30
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "|                                                                              |\n" },
+//	{ "--------------------------------------------------------------------------------\n" }, // now y= 31 
+//};
