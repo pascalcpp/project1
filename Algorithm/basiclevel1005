@@ -1,0 +1,53 @@
+#include<iostream>
+#include<map>
+using namespace std;
+int main()
+{
+	int k;
+	int a;
+	typedef map<int, bool> amp;
+	amp mp;
+	cin >> k;
+	for (int i = 0; i<k; i++)
+	{
+		cin >> a;
+		mp.insert(make_pair(a, true));
+	}
+	amp::iterator p1 = mp.begin();
+	for (; p1 != mp.end(); p1++)
+	{
+		int temp = p1->first;
+		int init = temp;
+		while (temp>1)
+		{
+			if (temp % 2)
+				temp = (temp * 3 + 1) / 2;
+			else
+				temp = temp / 2;
+			for (amp::iterator p2 = mp.begin(); p2 != mp.end(); p2++)
+			{
+				if (p2->first == init) continue;
+				if (temp == p2->first) p2->second = false;
+			}
+		}
+	}
+	int countq = 0;
+	int n1 = 1;
+	for (p1 = (--mp.end()); p1 != (--mp.begin()); p1--)
+	{
+		if (p1->second == true) countq++;
+	}
+	for (p1 = (--mp.end()); p1!=(--mp.begin()) ; p1--)
+	{		
+		if (p1->second == true)
+		{
+			cout << p1->first;		      
+			if (n1 < countq)
+			{
+				cout << " ";
+				n1++;
+			}							
+		}
+	} 
+	return 0;
+}
