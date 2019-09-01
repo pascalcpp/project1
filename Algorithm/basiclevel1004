@@ -1,0 +1,33 @@
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+struct studentinfo
+{
+	string name;
+	string id;
+};
+struct student
+{
+	studentinfo info;
+	int score;
+};
+int main()
+{
+	int n;
+	student st;
+	typedef map<int, studentinfo> amp;
+	map<int,studentinfo> mp;
+	cin >> n;
+	for (int i = 0; i<n; i++)
+	{
+		cin >> st.info.name >> st.info.id >> st.score;
+		mp.insert(make_pair(st.score, st.info));
+	}
+	amp::iterator p = mp.end();
+	p--;
+	cout << p->second.name<<" "<<p->second.id<<endl;
+	p = mp.begin();
+	cout << p->second.name << " " << p->second.id << endl;
+	return 0;
+}
