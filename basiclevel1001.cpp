@@ -1,9 +1,9 @@
-#include<stdio.h>
+#include<iostream>
 int main()
 {
 	int n, count;
 	count = 0;
-	scanf("%d", &n);
+	cin>>n;
 	while (n > 1)
 	{
 		if (n % 2)
@@ -14,6 +14,6 @@ int main()
 
 
 	}
-	printf("%d",count);
+	cout<<count;
 	return 0;
 }
