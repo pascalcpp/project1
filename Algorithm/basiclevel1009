@@ -1,0 +1,62 @@
+#include <iostream>
+#include <algorithm>
+#include<fstream>
+#include<cstring>
+#include<cstdio>
+using namespace std;
+int main()
+{
+	char n[100] = {};
+	char a[100][100] = {};
+	int count = 0;
+	char * find ;
+	int m = 0;
+	fgets(n, 100, stdin);
+	find = strchr(n,'\n');          
+	if (find!=NULL)                            
+		*find = '\0';
+	for (int i = 0; i < int(strlen(n)); i++)
+	{
+		if (n[i] != ' ')
+		{
+			a[count][m] = n[i];
+			m++;
+
+		}
+		if (n[i] == ' ')
+		{
+			count++;
+			m = 0;
+		}
+
+	}
+	reverse(a, a + (count + 1));
+	for (int i = 0; i <= count; i++)
+	{
+		if (i != 0)
+			cout << " ";
+		cout << a[i];
+	}
+
+
+
+
+	return 0;
+}
+
+
+#include <iostream>
+#include <stack>
+using namespace std;
+int main() {
+    stack<string> v;
+    string s;
+    while(cin >> s) v.push(s);
+    cout << v.top();
+    v.pop();
+    while(!v.empty()) {
+        cout << " " << v.top();
+        v.pop();
+    }
+    return 0;
+}
