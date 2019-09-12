@@ -1,0 +1,37 @@
+//#include <iostream>
+//using namespace std;
+//int main() {
+//	int a, b, flag = 0;
+//	while (cin >> a >> b) {
+//		if (b != 0) {
+//			if (flag == 1) cout << " ";
+//			cout << a * b << " " << b - 1;
+//			flag = 1;
+//		}
+//	}
+//	if (flag == 0) cout << "0 0";
+//	return 0;
+//}
+
+
+#include<iostream>
+using namespace std;
+int main()
+{
+	int n, e;
+	bool flag = false;
+	while (cin >> n >> e)
+	{
+		if (n*e)
+		{
+			if (flag)
+			cout << " ";//说明这里前面已经有导数得出，则输出空格隔开
+			cout << n*e << " " << e - 1; //正常输出导数的系数和指数
+			flag = true;//这里修改标志位，意思是已经有导数求出
+		}
+	}
+	if (flag == false)
+		cout << "0 0";
+		return 0;
+}
+
