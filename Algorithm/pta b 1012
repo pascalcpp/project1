@@ -1,0 +1,110 @@
+#include<iostream>
+#include<iomanip>
+using namespace std;
+double getmeanvalue(int q[], int n)
+{
+	double sum = 0;
+	for (int i = 0; i <n; i++)
+	{
+		sum += q[i];
+	}
+	sum = sum / n;
+	return sum;
+}
+int getsubsum(int a[], int n)
+{
+	int sum = 0;
+	int flag = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (flag == 0)
+		{
+			sum += a[i];
+			flag = 1;
+		}
+		else
+		{
+			sum -= a[i];
+			flag = 0;
+		}	
+	}
+	return sum;
+}
+int getmax(int a[], int n)
+{
+	int max = a[0];
+	for (int i = 1; i < n; i++)
+	{
+		if (a[i]>max)
+			max = a[i];
+	}
+	return max;
+}
+int main()
+{
+	int n;
+	int a1 = 0, a2 = 0, a3 = 0,a5 = 0;
+	double a4 = 0.0;
+	int b[2000] = {};
+	int a[2000] = {};
+	int c[2000] = {};
+	int d[2000] = {};
+	int j = 0;
+	int m = 0;
+	int count = 0;
+	int z = 0;
+	int u = 0;
+	cin >> n;
+	for (int i = 0; i<n; i++)
+	{
+		cin >> a[i];
+	}
+	for (int i = 0; i<n; i++)
+	{
+		if (a[i] % 5 == 0 && a[i] % 2 == 0)
+		{
+			a1 += a[i];
+			u++;
+		}
+		if (a[i] % 5 == 1)
+		{
+			b[j] = a[i];
+			j++;
+		}
+		if (a[i] % 5 == 2)
+			count++;
+		if (a[i] % 5 == 3)
+		{
+			c[m] = a[i];
+			m++;
+		}
+		if (a[i] % 5 == 4)
+		{
+			d[z] = a[i];
+			z++;
+		}
+	}
+	if (u == 0)
+	{
+		cout << "N ";
+	}
+	else
+		cout << a1 << " ";
+	if (j != 0)
+	    cout << getsubsum(b, j)<<" ";
+	if (j == 0)
+		cout << "N ";
+	if (count != 0)
+		cout << count <<" ";
+	if (count == 0)
+		cout << "N ";
+	if (m != 0)
+		printf("%.1f ",getmeanvalue(c,m));
+	if (m == 0)
+		cout << "N ";
+	if (z != 0)
+		cout << getmax(d, z);
+	if (z == 0)
+		cout << "N";
+	return 0;
+}
