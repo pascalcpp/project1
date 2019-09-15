@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+bool Isprime(int n)
+{
+	for (int i = 2; i*i <= n; i++)
+	{
+		if (n%i == 0)
+			return false;
+	}
+	return true;
+}
+int main()
+{
+	int flag = 0;
+	int m, n;
+	int count = 0;
+	int a[20000] = {};
+	cin >> m >> n;
+	for (int i = 2; count<n; i++)
+	{
+		if (Isprime(i))
+		{
+			a[count] = i;
+			count++;
+		}
+	}
+	for (int i = (m - 1); i<n; i++)
+	{
+		if (flag!=0)
+		{
+			cout << " ";
+		}
+		if (flag == 0)
+			flag = 1;
+		cout << a[i];
+		if ((i - m + 2) % 10 == 0)
+		{
+			cout << endl;
+			flag = 0;
+		}
+			
+	}
+
+
+
+	return 0;
+}
