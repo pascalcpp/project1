@@ -1,0 +1,81 @@
+#include<iostream>
+#include<cstring>
+#include<set>
+using namespace std;
+struct student
+{
+	int id;
+	int D;
+	int C;
+};
+struct Rule
+{
+	bool operator()(const student &a, const student &b)
+	{
+		if ((a.D + a.C) != (b.D + b.C))
+			return (a.D + a.C) > (b.D + b.C);
+		if ((a.D + a.C) == (b.D + b.C))
+		{
+			if (a.D == b.D)
+				return a.id < b.id;
+			else
+				return a.D>b.D;
+		}
+		    
+	}
+};
+int main()
+{
+	typedef multiset <student,Rule> m;
+	m mp1, mp2, mp3, mp4;
+	int n, l, h;
+	int count = 0;
+	student b;			
+	cin >> n >> l >> h;
+	for (int i = 0; i<n; i++)
+	{
+		cin >> b.id >> b.D >> b.C;
+		if (b.D >= h&&b.C >= h)
+		{
+			mp1.insert(b);
+			count++;
+			continue;
+		}
+		else if (b.D >= h&&b.C<h&&b.C >= l)
+		{
+			mp2.insert( b);
+			count++;
+			continue;
+		}
+		else if (b.D<h&&b.C<h&&b.D >= b.C&&b.D >= l&&b.C >= l)
+		{
+			mp3.insert( b);
+			count++;
+			continue;
+		}
+		else if (b.D >= l&&b.C >= l)
+		{
+			mp4.insert( b);
+			count++;
+			continue;
+		}
+	}
+	cout << count << endl;
+	for (m::iterator p =mp1.begin(); p != mp1.end(); ++p)
+	{
+		cout << p->id << " " << p->D << " " << p->C << endl;
+	}
+	for (m::iterator p = mp2.begin(); p != mp2.end(); ++p)
+	{
+		cout << p->id << " " << p->D << " " << p->C << endl;
+	}
+	for (m::iterator p = mp3.begin(); p !=mp3.end(); ++p)
+	{
+		cout << p->id << " " << p->D << " " << p->C << endl;
+	}
+	for (m::iterator p = mp4.begin(); p != mp4.end(); ++p)
+	{
+		cout << p->id << " " << p->D << " " << p->C << endl;
+	}
+	return 0;
+}
