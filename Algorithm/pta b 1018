@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+int abw = 0, acw = 0, ajw = 0;
+int bbw = 0, bcw = 0, bjw = 0;
+int equalment = 0;
+int totalwin = 0;
+int totallose = 0;
+void Judage(char a, char b)
+{
+	if ((a == 'B'&&b == 'B') || (a == 'J'&&b == 'J') || (a == 'C'&&b == 'C'))
+	{
+		equalment++;
+		return;
+	}
+	if ((a == 'B'&&b == 'C') || (a == 'C'&&b == 'J') || (a == 'J'&&b == 'B'))
+	{
+		if (a == 'B')
+			abw++;
+		if (a == 'C')
+			acw++;
+		if (a == 'J')
+			ajw++;
+		totalwin++;
+		return;
+	}
+	if ((a == 'J'&&b == 'C') || (a == 'B'&&b == 'J') || (a == 'C'&&b == 'B'))
+	{
+		if (b == 'B')
+			bbw++;
+		if (b == 'C')
+			bcw++;
+		if (b == 'J')
+			bjw++;
+		totallose++;
+		return;
+	}
+}
+char getmax(int b, int c, int j)
+{
+	int m = 0;
+	int a[3] = { b, c, j };
+	int max = b;
+	for (int i = 0; i<3; i++)
+	{
+		if (max<a[i])
+		{
+			max = a[i];
+			m = i;
+		}
+
+	}
+	if (m == 0)
+		return 'B';
+	if (m == 1)
+		return 'C';
+	if (m == 2)
+		return 'J';
+
+}
+int main()
+{
+	char a;
+	char b;
+	char result[12000] = { 0 };
+	int n;
+	cin >> n;
+	for (int i = 0; i<n; i++)
+	{
+		cin >> a >> b;
+		Judage(a, b);
+	}
+	cout << totalwin << " " << equalment << " " << totallose << endl;
+	cout << totallose << " " << equalment << " " << totalwin << endl;
+	cout << getmax(abw, acw, ajw) << " " << getmax(bbw, bcw, bjw);
+	return 0;
+}
