@@ -1,0 +1,68 @@
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+#include<math.h>
+#include<string>
+#include<functional>
+using namespace std;
+void Return_arr(int n, char a[])
+{
+	char tmp[5];
+	for (int i = 3; i >= 0; --i)
+	{
+		a[i] = '0' + (n % 10) - 0;
+		n /= 10;
+	}
+	a[4] = '\0';
+}
+int get_value(char a[])
+{
+	int n = 0;
+	int count = 3;
+	char tmp[1];
+	for (int i = 0; i<4; i++)
+	{
+		tmp[0] = a[count];
+		n = n + atoi(tmp) * pow(10, i);
+		count--;
+	}
+	return n;
+}
+void calculator(int n)
+{
+	int n1 = 0, n2 = 0;
+	char a[5];
+	Return_arr(n, a);
+	if (a[0] == a[1] && a[1] == a[2] && a[2] == a[3])
+	{
+		
+		cout << a << " " << "-" << " " << a << " " << "=" << " " << "0000";
+		return;
+	}
+	while (1)
+	{
+		sort(a, a + 4, greater<int>());
+		n1 = get_value(a);
+		cout << a << " " << "-" << " ";
+		sort(a, a + 4);
+		n2 = get_value(a);
+		cout << a<< " " << "=" << " ";
+		Return_arr((n1 - n2), a);
+		cout << a;
+		cout << endl;
+		if ((n1 - n2) == 6174)
+			return;
+		Return_arr((n1 - n2), a);
+		
+	}
+
+
+}
+int main()
+{
+	int n;
+	cin >> n;
+	calculator(n);
+
+	return 0;
+}
