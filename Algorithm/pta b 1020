@@ -1,0 +1,68 @@
+#include<iostream>
+#include<algorithm>
+#include<map>
+using namespace std;
+struct moon
+{
+	double stock;
+	double profit;
+};
+int main()
+{
+	double need, n;
+	moon c;
+	double a[1500];
+	double b[1500];
+	double unit = 0;
+	double tmpstock = 0;
+	double tmpprofit = 0;
+	double temp;
+	typedef multimap<double, moon> rmap;
+	rmap mp;
+	cin >> n >> need;
+	for (int i = 0; i<n; i++)
+	{
+		cin >> a[i];
+	}
+	for (int i = 0; i<n; i++)
+	{
+		cin >> b[i];
+	}
+	for (int i = 0; i<n; i++)
+	{
+		c.stock = a[i];
+		c.profit = b[i];
+		unit = double(b[i] / a[i]);
+		mp.insert(make_pair(unit, c));
+	}
+	if (((--mp.end())->second.stock) >= need)
+	{
+		tmpprofit = ((--mp.end())->first)*need;
+		printf("%.2f", tmpprofit);
+		return 0;
+	}
+	for (rmap::iterator p = (--mp.end()); p != (--mp.begin()); p--)
+	{
+		if (tmpstock<need)
+		{
+			tmpstock = tmpstock + (p->second.stock);
+			if (tmpstock<need)
+			{
+				temp = p->second.stock;
+				tmpstock = (tmpstock - (p->second.stock)) + temp;
+				tmpprofit = tmpprofit + double((p->first)*(temp));
+			}
+			if (tmpstock >= need)
+			{
+				temp = need - (tmpstock - (p->second.stock));
+				tmpstock = (tmpstock - (p->second.stock)) + temp;
+				tmpprofit = tmpprofit + double((p->first)*(temp));
+			}
+		}
+		else
+			break;
+	}
+	printf("%.2f", tmpprofit);
+
+	return 0;
+}
