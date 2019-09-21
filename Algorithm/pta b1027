@@ -1,0 +1,78 @@
+#include<iostream>
+using namespace std;
+int getodd(int n)
+{
+	return 2 * (n - 1) + 1;
+}
+int getnumber(int n)
+{
+	if (n == 1)
+		return 0;
+	else
+		return (2 * (n - 1) + 1);
+}
+int main()
+{
+	int n;
+	char sym;
+	int u = 0;
+	int count = 1;
+	int temp;
+	cin >> n >> sym;
+	while (u <= n)
+	{
+		temp = u;
+		if (count==1)
+		u = 2 * getnumber(count) + 1;
+		if (count!=1)
+		u = 2 * getnumber(count) + u;
+		if (u>n)
+		{
+			count--;
+			u = temp;
+			break;
+
+		}
+		count++;
+	}
+	temp = count;
+		  while (temp >= 1)
+		  {
+			  for (int a = 0; a<((getodd(count) - getodd(temp)) / 2); a++)
+			  {
+				  cout << " ";
+			  }
+			  for (int a = 0; a<getodd(temp); a++)
+			  {
+				  cout << sym;
+			  }
+			//   for (int a = 0; a<((getodd(count) - getodd(temp)) / 2); a++)
+			//   {
+			// 	  cout <<" ";
+			//   }
+			  cout << endl;
+			  temp--;
+		  }
+		  temp+=2;
+		  while (temp <= count)
+		  {
+			  for (int a = 0; a < ((getodd(count) - getodd(temp)) / 2); a++)
+			  {
+				  cout << " ";
+			  }
+			  for (int a = 0; a < getodd(temp); a++)
+			  {
+				  cout << sym;
+			  }
+			//   for (int a = 0; a < ((getodd(count) - getodd(temp)) / 2); a++)
+			//   {
+			// 	  cout << " ";
+			//   }
+			  cout << endl;
+			  temp++;
+		  }
+		  cout << (n - u)<<endl;
+		  
+			//__1__ <=>__1
+	return 0;
+}
