@@ -1,0 +1,87 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int tdate[10];
+	int tadddress[10];
+	int ttemp[10];
+	int date[100002];
+	int next[100002];
+	int c;
+	int dress;	
+	int counto=0;
+	int first, n, k;
+	cin >> first >> n >> k;
+	int tep = first;
+	int count=first;
+	for (int i = 0; i<n; i++)
+	{
+		cin >> dress;
+		cin >> date[dress];
+		cin >> next[dress];
+	}
+	while(count!=-1)
+	{
+	  count=next[count];
+	  counto++;
+	}	
+	n= counto;
+	if(k!=0)
+	c = n / k;
+    int u;
+    if(k!=0&&k!=1)
+    {
+    	for (int j = 0; j<c; j++)
+	{
+		for (int i = 0; i<k; i++)
+		{
+			tdate[i] = date[tep];
+			tadddress[i]= tep;
+			tep = next[tep];
+			u=tep;
+		}
+		reverse(tadddress,tadddress+k);
+		reverse(tdate,tdate+k);
+		if(j!=c-1)
+		for (int i = 0; i<k-1; i++)
+		{
+		   u=next[u];
+		}
+		for (int i = 0; i<k-1; i++)
+		{
+		    ttemp[i] = tadddress[i+1];
+		}
+		ttemp[k-1] = u;
+		if(n%k!=0)
+		for (int i = 0; i<k; i++)
+		{
+			printf("%05d %d %05d\n",tadddress[i],tdate[i],ttemp[i]);
+		}
+		if(n%k==0)
+		for (int i = 0; i<k; i++)
+		{
+			if(j==c-1&&i==k-1)
+		        printf("%05d %d -1\n",tadddress[i],tdate[i]);
+			else
+				printf("%05d %d %05d\n",tadddress[i],tdate[i],ttemp[i]);
+			
+		}
+	}
+	}
+	
+	while (tep != -1)
+	{
+		if(next[tep]!=-1)
+		{
+				printf("%05d %d %05d\n",tep,date[tep],next[tep]);		           
+		}
+		else
+		{
+			printf("%05d %d -1\n",tep,date[tep]);
+		}
+		tep = next[tep];
+	
+	}
+	return 0;
+}
